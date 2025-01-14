@@ -3,7 +3,7 @@ db.createCollection("video", {
     $jsonSchema: {
       "bsonType": "object",
       "title": "video",
-      "required": ["title", "description", "size", "file_name", "duration", "thumbnail", "views", "likes", "dislikes", "status", "tags", "uploaded_by", "uploaded_at", "likes_log", "dislikes_log"],
+      "required": ["title", "description", "size", "file_name", "duration", "thumbnail", "views", "likes", "dislikes", "status", "tags", "uploaded_by", "uploaded_at", "comments", "playlists", "likes_log", "dislikes_log"],
       "properties": {
         "title": {
           "bsonType": "string"
@@ -42,19 +42,146 @@ db.createCollection("video", {
           }
         },
         "uploaded_by": {
-          "bsonType": "objectId"
+          "bsonType": "object",
+          "title": "object",
+          "required": ["email", "username", "birth_date", "gender", "country", "postal_code"],
+          "properties": {
+            "email": {
+              "bsonType": "string"
+            },
+            "username": {
+              "bsonType": "string"
+            },
+            "birth_date": {
+              "bsonType": "date"
+            },
+            "gender": {
+              "enum": ["male","female"]
+            },
+            "country": {
+              "bsonType": "string"
+            },
+            "postal_code": {
+              "bsonType": "string"
+            }
+          }  
         },
         "uploaded_at": {
           "bsonType": "date"
+        },
+        "comments": {
+          "bsonType": "array",
+          "items": {
+            "title": "object",
+            "required": ["text", "created_at", "created_by"],
+            "properties": {
+              "text": {
+                "bsonType": "string"
+              },
+              "created_at": {
+                "bsonType": "date"
+              },
+              "created_by": {
+                "bsonType": "object",
+                "title": "object",
+                "required": ["email", "username", "birth_date", "gender", "country", "postal_code"],
+                "properties": {
+                  "email": {
+                    "bsonType": "string"
+                  },
+                  "username": {
+                    "bsonType": "string"
+                  },
+                  "birth_date": {
+                    "bsonType": "date"
+                  },
+                  "gender": {
+                    "enum": ["male","female"]
+                  },
+                  "country": {
+                    "bsonType": "string"
+                  },
+                  "postal_code": {
+                    "bsonType": "string"
+                  }
+                }  
+              }
+            }
+          }  
+        },
+        "playlists": {
+          "bsonType": "array",
+          "items": {
+            "title": "object",
+            "required": ["name", "created_at", "status", "created_by"],
+            "properties": {
+              "name": {
+                "bsonType": "string"
+              },
+              "created_at": {
+                "bsonType": "date"
+              },
+              "status": {
+                "enum": ["public", "private"]
+              },
+              "created_by": {
+                "bsonType": "object",
+                "title": "object",
+                "required": ["email", "username", "birth_date", "gender", "country", "postal_code"],
+                "properties": {
+                  "email": {
+                    "bsonType": "string"
+                  },
+                  "username": {
+                    "bsonType": "string"
+                  },
+                  "birth_date": {
+                    "bsonType": "date"
+                  },
+                  "gender": {
+                    "enum": ["male","female"]
+                  },
+                  "country": {
+                    "bsonType": "string"
+                  },
+                  "postal_code": {
+                    "bsonType": "string"
+                  }
+                }  
+              }
+            }
+          }  
         },
         "likes_log": {
           "bsonType": "array",
           "items": {
             "title": "object",
-            "required": ["user_id", "action_date"],
+            "required": ["user", "action_date"],
             "properties": {
-              "user_id": {
-                "bsonType": "objectId"
+              "user": {
+                "bsonType": "object",
+                "title": "object",
+                "required": ["email", "username", "birth_date", "gender", "country", "postal_code"],
+                "properties": {
+                  "email": {
+                    "bsonType": "string"
+                  },
+                  "username": {
+                    "bsonType": "string"
+                  },
+                  "birth_date": {
+                    "bsonType": "date"
+                  },
+                  "gender": {
+                    "enum": ["male","female"]
+                  },
+                  "country": {
+                    "bsonType": "string"
+                  },
+                  "postal_code": {
+                    "bsonType": "string"
+                  }
+                }  
               },
               "action_date": {
                 "bsonType": "date"
@@ -66,13 +193,32 @@ db.createCollection("video", {
           "bsonType": "array",
           "items": {
             "title": "object",
-            "required": ["user_id", "action_date"],
+            "required": ["user"],
             "properties": {
-              "user_id": {
-                "bsonType": "objectId"
-              },
-              "action_date": {
-                "bsonType": "date"
+              "user": {
+                "bsonType": "object",
+                "title": "object",
+                "required": ["email", "username", "birth_date", "gender", "country", "postal_code"],
+                "properties": {
+                  "email": {
+                    "bsonType": "string"
+                  },
+                  "username": {
+                    "bsonType": "string"
+                  },
+                  "birth_date": {
+                    "bsonType": "date"
+                  },
+                  "gender": {
+                    "enum": ["male","female"]
+                  },
+                  "country": {
+                    "bsonType": "string"
+                  },
+                  "postal_code": {
+                    "bsonType": "string"
+                  }
+                }  
               }
             }
           }  
